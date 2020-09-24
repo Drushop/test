@@ -1,0 +1,100 @@
+.views-field-field-product-photo{
+    margin-bottom: 30px;
+    img{
+        margin: 0 auto;
+    }
+}
+.product-title, .views-field-commerce-price{
+    text-align: center;
+    font-family: 'robotobold';
+}
+.views-field-commerce-price{
+    margin-bottom: 20px;
+}
+.product-title {
+    margin-right:20px;
+    margin-left:20px;
+    margin-bottom: 15px;
+    height: 63px;
+    overflow: hidden;
+    a{
+        color: #44BD32;
+    }
+}
+.product-container{
+    margin-bottom: 30px;
+}
+.views-field-add-to-cart-form{
+    input{
+        display: block;
+        margin: 0 auto;
+        background: #FF4757;
+        border: none;
+        color: #fff;
+        padding: 0 25px;
+        text-transform: uppercase;
+        line-height: 36px;
+        font-family: 'robotobold';
+        cursor: pointer;
+    }
+
+}
+.field-type-commerce-product-reference #edit-submit{
+        display: block;
+        background: #FF4757;
+        border: none;
+        color: #fff;
+        padding: 0 25px;
+        text-transform: uppercase;
+        line-height: 36px;
+        font-family: 'robotobold';
+        cursor: pointer;
+}
+.field-name-title{
+    margin: 15px 0 30px 0;
+    font-family: 'robotobold';
+    @include fontSize(20px);
+}
+.field-type-commerce-price{
+    font-family: 'robotobold';
+    @include fontSize(18px);
+}
+.field-type-commerce-product-reference{
+    label{
+        display: none;
+    }
+}
+.mobile-search-block{
+    display: none;
+}
+.breadcrumb{
+    padding: 15px 0;
+}
+.form-item-quantity .form-text{
+    width:50px;
+    padding: 5px;
+    @include fontSize(16px);
+    text-align: center;
+}
+
+@media (max-width: 576px) { 
+    .product-title {
+        a{
+            @include fontSize(15px);
+            font-family: 'robotoregular';
+        }
+    }
+    .views-field-field-product-photo {
+        margin-bottom: 15px;
+    }
+    .product-title {
+        margin-right:0;
+        margin-left:0;
+    }
+    .views-field-add-to-cart-form{
+        input{
+            @include fontSize(13px);
+            line-height: 30px;
+        }
+    }
+}

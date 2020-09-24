@@ -1,0 +1,198 @@
+*,
+*:after,
+*:before {
+  @include box-sizing(border-box);
+  transition: 0.5s ease-in-out;
+}
+
+a{
+    text-decoration: none;
+}
+html,
+body{
+	height: 100%;
+}
+body{
+    background: url('../images/body-bg.jpg') top center;
+    background-attachment: fixed;
+    @include fontSize(16px);
+    font-family: 'robotoregular';
+    line-height: 1.3;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color:#2F3640;
+    min-width: 320px;
+}
+img{
+    height:auto;
+    max-width: 100%;
+    display: block;
+}
+p{
+    margin-bottom: 15px;
+}
+/* drupal reset */
+ul li.leaf {
+    list-style-image: none;
+    list-style-type: none;
+}
+ul.menu li {
+    margin: 0;
+}
+li.expanded, li.collapsed, li.leaf {
+    padding: 0;
+    margin: 0;
+}
+/* base grid */
+.page{
+    width:100%;
+    max-width: 1200px;
+    margin:0 auto;
+    padding: 0 30px;
+    background: #fff;
+    display: flex;
+	flex-direction: column;
+    min-height: 100%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.main-content{
+    flex: 1 0 auto;
+    flex-direction: column;
+    display: flex;
+}
+.footer {
+    height: 80px;
+    flex: 0 0 auto;
+    background: #2F3640;
+    margin-bottom: 15px;
+}
+@media (max-width: 992px) {
+    .page{
+        padding: 0;
+    }
+}
+/* drupal reset */
+.views-exposed-form .views-exposed-widget {
+    float: left;
+    padding: 0;
+}
+.views-exposed-form .views-exposed-widget .form-submit{
+    margin: 0;
+}
+.views-exposed-widgets {
+    margin-bottom: 0;
+}
+/* header */
+.logo{
+    width: 40%;
+    flex-basis: 40%;
+    display: flex;
+    justify-content: center;
+}
+.contacts{
+    width: 30%;
+    flex-basis: 30%;
+}
+.search{
+    width: 30%;
+    flex-basis: 30%;
+    .user-menu{
+        display: flex;
+        .menu{
+            margin-right: 10px;
+            position: relative;
+            font-size: 0;
+        }
+        .menu a{
+            width:32px;
+            height: 40px;
+            display: block;
+            background: url('../images/acount.svg') 100%;
+        }
+        
+    }
+    
+}
+.mobile-header{
+    display: flex;
+    background: red;
+    padding: 20px 0;
+}
+.header-row{
+    display: none;
+}
+.ajax-shopping-cart-teaser{
+    display: flex;
+    align-items: center; 
+    margin: 15px 0; 
+    p{
+        margin: 5px 0;
+        color: #2F3640;
+    }
+}
+.cart-image{
+    position: relative;
+}
+.cart-product-quantity{
+    top:-14px;
+    right:-8px;
+    position: absolute;
+    color: #2F3640;
+}
+.mobile-button{
+    width:100px;
+    height: 50px;
+    background: yellow;
+}
+/* search */
+
+.views-exposed-widgets{
+    input{
+        width: 100%;
+        height: 28px;
+        display: block;
+        
+    }
+    .views-widget-filter-search_api_views_fulltext{
+        width:75%;
+        input{
+            border:1px solid #DCDDE1;
+            background: #DCDDE1;
+            padding: 5px 15px;
+            font-size: 15px;
+            font-size: 0.9375rem;
+            
+        }
+        input:focus{
+            border-left:1px solid black;
+            border-top:1px solid black;
+            border-bottom:1px solid black;
+            outline: none;
+        }
+    }
+    .views-submit-button{
+        width:25%;
+        position: relative;
+        input{
+            border: 1px solid #44BD32;
+            cursor: pointer;
+            background: #44BD32;
+            color: #44BD32;
+            line-height: 27px;
+            padding: 0 15px;
+            
+        }
+        &:before{
+            content: '';
+            display: block;
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: url(../images/search.svg);
+            left: 50%;
+            margin-left: -12px;
+            top:2px;
+            cursor: pointer;
+        }
+    }
+}

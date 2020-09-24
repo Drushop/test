@@ -1,0 +1,202 @@
+/* product-display 
+.product-container{
+    margin: 0 0 30px 0;
+    padding: 0 15px;
+    cursor: pointer;
+    .views-field-field-product-photo img{
+        margin: 0 auto 15px auto;
+    }
+    .product-detailed-information .product-title{
+        text-align: center;
+        margin-bottom: 15px;
+        height: 35px;
+        overflow: hidden;
+        padding: 0 10px;
+    }
+    .product-detailed-information .product-title a{
+        color:#44BD32;
+        font-family: 'robotobold';
+    }
+    .views-field-commerce-price{
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .commerce-add-to-cart .form-submit{
+        display: block;
+        margin: 0 auto;
+        background: #FF4757;
+        color: #fff;
+        border:1px solid #FF4757;
+        text-transform: uppercase;
+        line-height: 35px;
+        padding: 0 30px;
+        font-family: 'robotobold';
+    }
+}
+
+
+#views-exposed-form-product-catalog-page-1{
+    display: flex;
+    justify-content: flex-end;
+}
+.views-submit-button input{
+    line-height: 28px;
+    height: 28px;
+    display: block;
+    padding: 0 10px;
+}
+.field-name-field-product-reference{
+    margin: 15px 0;
+    @include clearFix();
+}
+.field-name-field-product-reference .commerce-add-to-cart .form-item{
+    float: left;
+}
+.field-name-field-product-reference .commerce-add-to-cart .form-submit{
+    float: left;
+}
+#edit-quantity{
+    width: 40px;
+    height: 36px;
+    text-align: center;
+    padding: 2px;
+    border: 1px solid black;
+    @include fontSize(15px);
+    margin: 0 15px 0 0;
+}
+.field-name-field-product-reference .commerce-add-to-cart .form-submit{
+    text-transform: uppercase;
+    display: block;
+    padding: 8px 20px;
+    background: #FF4757;
+    border:1px solid #FF4757;
+    color: #fff;
+    cursor: pointer;
+    font-family: 'robotobold';
+}
+.form-item-quantity label{
+    display: none;
+}
+.product-grid-2{
+    display: flex;
+    margin-bottom: 15px;
+}
+.field-name-commerce-price{
+    font-size: 18px;
+}
+.field-name-title{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.field-name-title h2{
+    font-size: 20px;
+}
+.field-name-commerce-price{
+    margin: 0 0 15px 0;
+    font-family: 'robotobold';
+}
+.field-name-field-product-photo{
+    .owl-carousel .owl-item img{
+        margin: 0 auto;
+    }
+}
+.breadcrumb{
+    margin: 15px 0;
+    font-size: 15px;
+}
+.field-name-body{
+    font-size: 15px;
+    margin: 0 0 30px 0;
+    .field-items{
+        margin: 0 0 0 15px;
+    }
+}
+.field-name-body .field-label{
+    padding: 10px 15px;
+    background: #DCDDE1;
+    margin-bottom: 15px;
+
+}*/
+.breadcrumb{
+    padding: 15px 0;
+}
+.field-name-title{
+    font-size: 20px;
+    margin: 15px 0 15px 0;
+}
+.field-name-commerce-price{
+    font-size: 20px;
+    margin: 0 0 15px 0;
+}
+.field-type-commerce-product-reference input[type|="submit"]{
+    border:1px solid #FF4757;
+    background: #FF4757;
+    color: #fff;
+    font-family: 'robotobold';
+    text-transform: uppercase;
+    padding: 8px 30px;
+}
+.form-item-quantity label{
+    display: none;
+}
+.form-item-quantity input[type|="text"]{
+    padding: 5px;
+    width:50px;
+}
+.form-item-quantity{
+    margin-bottom: 20px;
+}
+.node-product-display {
+    .col-3,.col-6{
+        padding: 0 15px;
+    }
+    .row{
+        margin: 0 -15px;
+    }
+}
+.field-type-commerce-product-reference{
+    margin-bottom: 20px;
+}
+.field-name-body .field-label{
+    border:1px solid #DDD;
+    background: #FBFBFB;
+    padding: 8px 15px;
+    margin: 15px 0;
+    font-size: 16px;
+    font-weight: normal;
+}
+.field-name-body .field-item{
+    padding:0 15px;
+}
+
+.product-container.views-fieldset{
+    margin-bottom: 30px;
+    .views-field-field-product-photo .adaptive-image{
+        margin: 0 auto 15px auto;
+    }
+    .product-detailed-information.views-fieldset .product-title{
+        height: 56px;
+        overflow: hidden;
+        margin: 0 0 15px 0;
+        text-align: center;
+    }
+}
+.view-home-page-product-grid{
+    .col-3{
+        padding: 0 15px;
+    }
+}
+.views-field-add-to-cart-form input[type|="submit"] {
+    border: 1px solid #FF4757;
+    background: #FF4757;
+    color: #fff;
+    font-family: 'robotobold';
+    text-transform: uppercase;
+    padding: 8px 30px;
+    display: block;
+    margin: 0 auto;
+}
+.views-field-commerce-price{
+    text-align: center;
+    margin-bottom: 20px;
+}

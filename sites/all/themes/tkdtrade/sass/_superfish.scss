@@ -1,0 +1,138 @@
+#superfish-1{
+    float: left;
+    width:100%;
+    background-color: #44BD32;
+    a{
+        font-family: 'robotobold';
+        @include fontSize(15px);
+    }
+    .sf-item-2 a.sf-depth-1{
+        padding: 15px 20px 15px 30px;
+    }
+    a.sf-depth-1:hover{
+        color:#2F3640;
+    }
+    a.sf-depth-1{
+        text-transform: uppercase;
+        color: #fff;
+        padding: 15px 20px 15px 20px;
+    }
+    li.sf-depth-1#menu-861-1.first {
+        width: 25%;
+        background-color: #2F3640;
+        &:before{
+            content: "";
+            display: block;
+            width: 20px;
+            height: 30px;
+            background: url(../images/menu.svg);
+            position: absolute;
+            left: 20px;
+            top: 8px;
+        }
+    }
+    li.sf-depth-1.first a.sf-depth-1{
+        padding: 15px 20px 15px 60px;
+       
+    }
+    li.sf-depth-1.first a.sf-depth-1:hover{
+        color: #FF4757;
+    }
+    li.sf-depth-1 > ul{
+        margin-top: 7px;
+        padding: 15px 0;
+        background-color: #fff/*#2F3640*/;
+        width: 400%;
+        border-top:3px solid #2F3640;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+    }
+    li.sf-depth-2 ul{
+        left: 25%;
+        top:-30px;
+        width: 75%;
+        height: 100%;
+    }
+    a.sf-depth-2{
+        padding: 17px 20px 15px 60px;
+        text-transform: uppercase;
+        @include fontSize(15px);
+        
+    }
+}
+
+#superfish-2{
+    width:100%;
+    float: left;
+    padding: 15px 0 15px 0;
+}
+#superfish-2.sf-menu li{
+    width:100%;
+    
+    
+    a{
+        text-transform: uppercase;
+        font-size: 15px;
+        padding: 15px 30px 15px 60px;
+        font-family: 'robotobold';
+    }
+
+}
+.sf-accordion-toggle.sf-style-none{
+    position: absolute;
+    top:15px;
+    left:20px;
+}
+#superfish-1-toggle{
+    display: block;
+    position: relative;
+    i:before{
+        width:20px;
+        height:30px;
+        content:'';
+        position: absolute;
+        background: url('../images/menu.svg');
+    }
+}
+#superfish-1-accordion{
+    padding: 20px 0;
+    z-index: 0;
+    a.sf-depth-1{
+        padding: 15px 18px 15px 18px;
+        text-transform: uppercase;
+        font-family: 'robotobold';
+        color:#2F3640;
+    }
+    ul a.sf-depth-2 {
+        padding: 15px 18px 15px 48px;
+        text-transform: uppercase;
+        font-family: 'robotobold';
+    }
+}
+@media (max-width: 992px){
+    #superfish-1 a.sf-depth-1 {
+        padding: 15px 15px 15px 15px;
+    }
+    #superfish-1 .sf-item-2 a.sf-depth-1 {
+        padding: 15px 15px 15px 15px;
+    }
+    #block-superfish-1{
+        .sf-accordion-toggle.sf-style-none a{
+            background: #44BD32;
+            padding: 20px 15px 20px 60px;
+            display: block;
+            color:#fff;
+            text-transform: uppercase;
+            position: relative;
+            &:before{
+                content: "";
+                display: block;
+                width: 20px;
+                height: 30px;
+                background: url(../images/menu.svg);
+                position: absolute;
+                left: 20px;
+                top: 4px;
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+@mixin box-sizing($box-model) {
+    -webkit-box-sizing: $box-model;
+       -moz-box-sizing: $box-model;
+            box-sizing: $box-model;
+}
+@function calculateRem($size) {
+    $remSize: $size / 16px;
+    @return #{$remSize}rem;
+}
+@mixin fontSize($size) {
+    font-size: $size;
+    font-size: calculateRem($size);
+}
+@mixin clearFix(){
+    &:before,
+    &:after{
+      content: " "; 
+      display: table; 
+    }
+  
+    &:after{
+      display: block;
+      clear: both;
+      height: 1px;
+      margin-top: -1px;
+      visibility: hidden;
+    }
+    &{
+      *zoom: 1;
+    }
+  }

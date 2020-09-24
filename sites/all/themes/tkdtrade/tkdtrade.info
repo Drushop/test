@@ -1,0 +1,17 @@
+name = Tkdtrade
+description = A flexible, recolorable theme with many regions.
+package = Core
+version = VERSION
+core = 7.x
+
+stylesheets[all][] = css/reset.css
+stylesheets[all][] = css/style.css
+
+scripts[] = js/main.js
+
+regions[login-block] = Login
+regions[navigation] = Navigation
+regions[header] = Header
+regions[slider-left] = Слайдер левый сайдбар
+regions[slider-content] = Слайдер контент
+regions[content] = Content

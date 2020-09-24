@@ -1,0 +1,211 @@
+<?php
+/**
+ * @file
+ * Main file of module.
+ */
+
+// Possible errors during receiving entity indexed info.
+define('SEARCH_API_DEVEL_ERROR_INDEX_DISABLED', 'Index disabled.');
+define('SEARCH_API_DEVEL_ERROR_ENTITY_NOT_FOUND', 'Entity not found.');
+define('SEARCH_API_DEVEL_ERROR_SERVER_NOT_LOADED', 'Server not loaded.');
+define('SEARCH_API_DEVEL_ERROR_SERVER_NOT_COMPATIBLE', 'Server not supported.');
+
+require_once __DIR__ . '/search_api_devel.block.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function search_api_devel_menu() {
+  $paths = array(
+    'node' => 'node',
+    'comment' => 'comment',
+    'user' => 'user',
+    'taxonomy/term' => 'taxonomy_term',
+  );
+
+  $items = array();
+
+  foreach ($paths as $path_prefix => $entity_type) {
+    $arg_number = count(explode('/', $path_prefix));
+    $items["$path_prefix/%/devel/sapi"] = array(
+      'title' => 'Search API',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('search_api_devel_page_form', $entity_type, $arg_number),
+      'access arguments' => array('access to search_api devel information'),
+      'type' => MENU_LOCAL_TASK,
+      'file' => 'search_api_devel.pages.inc',
+      'weight' => 30,
+    );
+  }
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function search_api_devel_permission() {
+  return array(
+    'reindex content manually' => array(
+      'title' => t('Reindex content manually'),
+      'description' => t('Reindex content manually via search api devel.'),
+    ),
+    'access to search_api devel information' => array(
+      'title' => t('Search API Devel info'),
+      'description' => t('Allows to see information provided by search api devel'),
+    )
+  );
+}
+
+/**
+ * Implements hook_search_api_results_alter().
+ */
+function search_api_devel_search_api_results_alter(array &$results, SearchApiQueryInterface $query) {
+  if (variable_get('search_api_devel_debug_queries', 1) && user_access('access to search_api devel information')) {
+    // Store the results so we can get all the results later.
+    $responses = &drupal_static('search_api_devel_search_api_results', array());
+    $responses['search_api@' . $query->getIndex()->machine_name . ' #' . (count($responses) + 1)] = $results;
+  }
+}
+
+/**
+ * Return array with information about entity indexed data.
+ *
+ * @param string $entity_type
+ *   Type of the entity.
+ * @param integer $entity_id
+ *   Entity identifier.
+ *
+ * @return array
+ *   [index_id] => [
+ *     [index] => searchapi index object,
+ *     [error] => text of possible error,
+ *     [data] => entity indexed data (empty if there is any error),
+ *   ]
+ */
+function search_api_devel_get_entity_indexed_data($entity_type, $entity_id) {
+  $entity_indexed_data = array();
+  if ($indexes = search_api_index_load_multiple(FALSE, array('item_type' => $entity_type))) {
+
+    foreach ($indexes as $index) {
+      $entity_indexed_data[$index->id] = _search_api_devel_get_entity_data_from_index(
+        $index,
+        $entity_id
+      );
+    }
+  }
+
+  return $entity_indexed_data;
+}
+
+/**
+ * Proceed one index to get entity indexed data from it.
+ *
+ * @param \SearchApiIndex $index
+ *   SearchAPI index object.
+ * @param integer $entity_id
+ *   Entity identifier.
+ *
+ * @return mixed
+ *   Return array with indexed data, see description of
+ *   search_api_devel_get_entity_indexed_data return param for more details.
+ */
+function _search_api_devel_get_entity_data_from_index(SearchApiIndex $index, $entity_id) {
+  $entity_indexed_data['index'] = $index;
+  if (!$index->enabled) {
+    $entity_indexed_data['error'] = SEARCH_API_DEVEL_ERROR_INDEX_DISABLED;
+  }
+  // Loading server to build an indexed data from it.
+  elseif (!$server = search_api_server_load($index->server)) {
+    $entity_indexed_data['error'] = SEARCH_API_DEVEL_ERROR_SERVER_NOT_LOADED;
+  }
+  // We can try to retrieve data.
+  else {
+    // @todo Implement functionality for Elastic Search.
+    // Search API DB.
+    if ($server->class == 'search_api_db_service') {
+      // Get tables and their fields to make SQL query.
+      $fields = $server->options['indexes'][$index->machine_name];
+      $tables = array();
+      foreach ($fields as $field) {
+        if (!empty($field['column'])) {
+          $tables[$field['table']][] = $field['column'];
+        }
+        else {
+          $tables[$field['table']] = FALSE;
+        }
+      }
+
+      $data = [];
+      // Get data from database.
+      foreach ($tables as $table_name => $field_names) {
+        $query = db_select($table_name, 't');
+        // If we have certain fields then get them, otherwise, just get all fields.
+        $query->fields('t', !empty($field_names) ? $field_names : array());
+        $query->condition('item_id', $entity_id);
+        $res = $query->execute();
+        while ($item = $res->fetchAssoc()) {
+          // Fulltext field.
+          if (!empty($item['field_name']) && !empty($item['word'])) {
+            $data[$item['field_name']][] = array(
+              'word' => $item['word'],
+              'score' => $item['score'],
+            );
+          }
+          // Other fields.
+          else {
+            $data = array_merge($data, $item);
+          }
+        }
+      }
+    }
+    // Search API Solr.
+    elseif ($server->class == 'search_api_solr_service') {
+      $site_hash = !empty($server->options['site_hash']) ? search_api_solr_site_hash() . '-' : '';
+      $id = $site_hash . $index->machine_name . '-' . $entity_id;
+
+      // Trying to receive indexed data.
+      $connection = $server->getSolrConnection();
+      $params = array(
+        'fq' => array(
+          "id:$id",
+        ),
+      );
+      $res = $connection->search(NULL, $params);
+      $data = !empty($res->response->docs) ? reset($res->response->docs) : FALSE;
+    }
+  }
+
+  // Prepare the response.
+  if (empty($data)) {
+    $entity_indexed_data['error'] = SEARCH_API_DEVEL_ERROR_ENTITY_NOT_FOUND;
+  }
+  else {
+    $entity_indexed_data['data'] = $data;
+  }
+
+  return $entity_indexed_data;
+}
+
+/**
+ * Remove entities from index.
+ *
+ * @param \SearchApiIndex $index
+ *   Search API index object.
+ * @param mixed $entity_ids
+ *   Array of entity ids or 'all' to remove all entities.
+ *
+ * @return bool
+ *  FALSE if there is no server in index, TRUE otherwise.
+ */
+function search_api_devel_remove_entity_from_index(SearchApiIndex $index, $entity_ids = 'all') {
+  $result = FALSE;
+  if ($index->server) {
+    $server = $index->server();
+    $server->deleteItems($entity_ids, $index);
+
+    $result = TRUE;
+  }
+
+  return $result;
+}
